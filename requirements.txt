@@ -6,4 +6,3 @@ mpmath
 matplotlib
 numdifftools
 schwimmbad
-jax[cpu]
