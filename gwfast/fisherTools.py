@@ -56,9 +56,11 @@ def CovMatr(FisherMatrix,
     CovMatr = onp.zeros(FisherMatrix.shape).astype(typeuse)
     
     cho_failed = 0
+    
+    # Iterate over the events
     for k in range(FisherM.shape[-1]):
         
-        
+        # Check if NaN values for a specific event
         if onp.all(onp.isnan(FisherM[:, :, k])):
             if verbose:
                 print('Fisher is nan at position %s. ' %k)
@@ -68,6 +70,8 @@ def CovMatr(FisherMatrix,
             ff = mpmath.matrix( FisherM[:, :, k].astype(typeuse))
             try:
                 # Conditioning of the original Fisher
+                
+                # Checks this by computing the eigenvalues of the FIM
                 E, _ = mpmath.eigh(ff)
                 E = onp.array(E.tolist(), dtype=typeuse)
                 if onp.any(E<0) and verbose:
@@ -164,6 +168,9 @@ def CovMatr(FisherMatrix,
                         llinv = ll**-1
                         uinv=U**-1
                         cc = uinv*llinv
+                        
+                        
+                #### END OF INVERSION METHODS
                 
                 
                 # Enforce symmetry.
